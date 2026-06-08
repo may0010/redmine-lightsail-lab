@@ -1,10 +1,8 @@
-# redmine-lightsail-lab
-
-Redmine setup guide on AWS Lightsail using Docker and View Customize plugin.
-
 # Redmine on AWS Lightsail
 
 AWS Lightsail 上に Docker を利用して Redmine を構築し、View Customize プラグインを導入するための手順をまとめたリポジトリです。
+
+（Redmine setup guide on AWS Lightsail using Docker and View Customize plugin.）
 
 個人学習や検証環境の構築を目的としています。
 
@@ -38,15 +36,41 @@ Redmine
 * Docker のインストール
 * Redmine の起動
 * View Customize プラグインの導入
-* よくあるエラーと対処方法
 
 ## ディレクトリ構成
 
 ```text
 .
 ├── README.md
-└── install.md
+└── docs
+    │
+    ├── install.md
+    ├── plugin.md
+    │
+    └── decisions
+        │
+        └── ADR-001-why-lightsail.md
 ```
+
+## 各ファイルの役割
+
+* Readme.md
+  * リポジトリのトップページ
+* docs/install.md
+  * AWS Lightsail 上に Docker を利用して Redmine を構築する手順
+* docs/plugin.md
+  * View Customize導入手順
+* docs/decisions/ADR-001-why-lightsail.md
+  * 技術選定理由
+
+本リポジトリの手順は、以下の順に参照してください。
+
+docs/install.md　→　docs/plugin.md
+
+なお、docs/decisions/ADR-001-why-lightsail.mdは技術選定時の検討内容を記録したメモです。
+
+環境構築には必須ではないため、必要に応じて参照してください。
+
 
 ## Disclaimer
 
