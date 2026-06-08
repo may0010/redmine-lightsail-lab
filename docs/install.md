@@ -1,16 +1,16 @@
-# Redmine Installation Guide
+# Redmine インストールガイド
 
 このドキュメントでは、AWS Lightsail 上に Docker を利用して Redmine を構築する手順を説明します。
 
-## Prerequisites
+## 前提条件
 
-* AWS アカウント
+* AWS アカウントを保有していること
 * AWS Lightsail を利用できること
 * ブラウザから SSH 接続できること
 
 ---
 
-## Architecture
+## 構成
 
 ```text
 Browser
@@ -26,26 +26,40 @@ Redmine
 
 ---
 
-## 1. Create a Lightsail Instance
+## 1. AWS Lightsail インスタンス作成
 
 Lightsail で新しいインスタンスを作成します。
 
-### Settings
+https://lightsail.aws.amazon.com/
 
-| Item          | Value                   |
-| ------------- | ----------------------- |
-| Platform      | Linux/Unix              |
-| Blueprint     | Ubuntu 24.04 LTS        |
-| Plan          | Smallest available plan |
-| Instance Name | redmine-lab             |
+### 今回の設定内容
 
-作成完了後、SSH 接続を行います。
+| 項目        | 設定値              |
+| --------- | ---------------- |
+| プラットフォーム  | Linux / Unix     |
+| 設計図の選択(OSのみ)   | Ubuntu 24.04 LTS | 
+| 起動スクリプト | 任意（今回は設定せず） |
+| SSHキー | 初回なのでカスタムキーを作成 |
+| 自動スナップショット | チェックせず |
+| インスタンスプラン | 汎用     |
+| ネットワークタイプ | デュアルスタック |
+| (OSの)サイズ | $7の1GBメモリを選択 |
+| インスタンス名   | 任意（例：redmine-lab）   |
+| タグ | 任意 |
+
+作成完了まで数分待った後、SSH 接続を行います。
+
+「接続タブ＞SSHを使用して接続」ボタンを押すと、別ウィンドウにターミナルが開きます。
+
+```text
+以下、このような窓で囲まれた部分のコードをコピーして、ターミナルに貼りつけて実行します。
+```
 
 ---
 
-## 2. Install Docker
+## 2. Dockerをインストール
 
-システムを更新します。
+システムを更新します（実行後、少し待ちます）。
 
 ```bash
 sudo apt update
@@ -71,18 +85,27 @@ newgrp docker
 docker --version
 ```
 
+バージョンが出ればOK。
+
 ---
 
-## 3. Create Working Directory
+## 3. Redmineフォルダ作成
 
 ```bash
 mkdir ~/redmine
 cd ~/redmine
 ```
 
+後からプラグインを入れるために、フォルダのオーナーを `ubuntu` に変えておきます。
+
+```bash
+sudo chown -R ubuntu:ubuntu ~/redmine
+```
+
+
 ---
 
-## 4. Create Docker Compose File
+## 4. Nanoエディタで docker-compose.yml を編集
 
 ```bash
 nano docker-compose.yml
@@ -112,9 +135,14 @@ services:
 > Note:
 > 実運用では `your-secret-key` を十分長いランダム文字列に変更してください。
 
+* ファイルを保存して、Nanoエディタを閉じる
+  * 保存： `Ctrl + O` ※ゼロではなくオー
+  * 確定： `Enter`
+  * 修了： `Ctrl + X`
+
 ---
 
-## 5. Start Redmine
+## 5. DockerコンテナとRedmineを起動
 
 コンテナを起動します。
 
@@ -122,7 +150,7 @@ services:
 docker compose up -d
 ```
 
-状態確認。
+初回は数分かかるので、待ってから状態確認します。
 
 ```bash
 docker ps
@@ -137,9 +165,9 @@ xxxxxxxxxxxx   redmine:latest   Up xx seconds
 
 ---
 
-## 6. Access Redmine
+## 6. ブラウザでRedmineを開く
 
-Lightsail の Public IP を確認し、ブラウザでアクセスします。
+AWS Lightsail の画面から 「静的 IP アドレス」 をコピーし、ブラウザでアクセスします。
 
 ```text
 http://<Public-IP>
@@ -156,7 +184,7 @@ Password: admin
 
 ---
 
-## 7. Verify Installation
+## 7. インストール成功を確認
 
 以下を確認します。
 
@@ -164,47 +192,14 @@ Password: admin
 * admin ユーザーでログインできる
 * プロジェクト作成画面が表示される
 
----
-
-## Useful Commands
-
-### Check Running Containers
-
-```bash
-docker ps
-```
-
-### View Logs
-
-```bash
-docker logs redmine
-```
-
-### View Last 50 Log Lines
-
-```bash
-docker logs redmine --tail 50
-```
-
-### Restart Redmine
-
-```bash
-docker compose restart
-```
-
-### Stop Redmine
-
-```bash
-docker compose down
-```
 
 ---
 
-## Next Step
+## 次のステップ→
 
 Redmine が正常に起動したら、View Customize プラグインを導入します。
 
-See:
+以下のファイルを開いてください。
 
 ```text
 docs/plugin.md
