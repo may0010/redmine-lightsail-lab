@@ -52,7 +52,13 @@ Redmine
 
 本リポジトリの手順は、以下の順に参照してください。
 
-docs/install.md　→　docs/plugin.md　→　docs/closing.md
+```text
+docs/install.md
+    ↓
+docs/plugin.md
+    ↓
+docs/closing.md
+```
 
 なお、docs/decisions/ADR-001-why-lightsail.mdは技術選定時の検討内容を記録したメモです。
 
