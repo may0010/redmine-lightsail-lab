@@ -41,31 +41,18 @@ Redmine
 
 ```text
 .
-├── README.md
+├── README.md                                # リポジトリ概要
 └── docs
-    │
-    ├── install.md
-    ├── plugin.md
-    │
+    ├── install.md                           # Redmine構築手順
+    ├── plugin.md                            # View Customize導入手順
+    ├── closing.md                           # 環境削除手順
     └── decisions
-        │
-        └── ADR-001-why-lightsail.md
+        └── ADR-001-why-lightsail.md         # 技術選定の記録
 ```
-
-## 各ファイルの役割
-
-* Readme.md
-  * リポジトリのトップページ
-* docs/install.md
-  * AWS Lightsail 上に Docker を利用して Redmine を構築する手順
-* docs/plugin.md
-  * View Customize導入手順
-* docs/decisions/ADR-001-why-lightsail.md
-  * 技術選定理由
 
 本リポジトリの手順は、以下の順に参照してください。
 
-docs/install.md　→　docs/plugin.md
+docs/install.md　→　docs/plugin.md　→　docs/closing.md
 
 なお、docs/decisions/ADR-001-why-lightsail.mdは技術選定時の検討内容を記録したメモです。
 
